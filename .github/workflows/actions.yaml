@@ -29,6 +29,7 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           pip install pytest pytest-cov
+          pip install --upgrade awscli
           
           
       - name: Configure AWS credentials
@@ -47,6 +48,7 @@ jobs:
           
       - name: Deploy to Lambda
         run: |
+          
           FUNCTION_NAME="${{ secrets.LAMBDA_FUNCTION_NAME }}"
            # Check if function exists
           if aws lambda get-function --function-name $FUNCTION_NAME 2>/dev/null; then
