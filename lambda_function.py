@@ -79,6 +79,8 @@ def lambda_handler(event, context):
 
         # Parse the incoming event
         body = json.loads(event['body']) if 'body' in event else event
+        # check the quiz_data
+        logger.info(f'quiz data : {body.get("quiz_data")}')
 
         # Generate unique ID if not provided
         quiz_id = body.get('id', str(uuid.uuid4()))
