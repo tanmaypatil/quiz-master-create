@@ -55,7 +55,7 @@ jobs:
             echo "Function exists, updating code..."
             aws lambda update-function-configuration \
             --function-name $FUNCTION_NAME \
-            --environment Variables={BASIC_AUTH_USERNAME=${{secrets.BASIC_AUTH_USERNAME}},BASIC_AUTH_PASSWORD=${{secrets.BASIC_AUTH_PASSWORD}} }
+            --environment "Variables={BASIC_AUTH_USERNAME=${{secrets.BASIC_AUTH_USERNAME}},BASIC_AUTH_PASSWORD=${{secrets.BASIC_AUTH_PASSWORD}} }""
           else
             echo "Function does not exist, creating new one..."
             aws lambda create-function \
@@ -64,8 +64,8 @@ jobs:
             --handler lambda_function.lambda_handler \
             --runtime python3.11 \
             --role  arn:aws:iam::585008060270:role/quiz-master \
-            --environment Variables={BASIC_AUTH_USERNAME=${{secrets.BASIC_AUTH_USERNAME}},BASIC_AUTH_PASSWORD=${{secrets.BASIC_AUTH_PASSWORD}} }
-          
+            --environment "Variables={BASIC_AUTH_USERNAME=${{secrets.BASIC_AUTH_USERNAME}},BASIC_AUTH_PASSWORD=${{secrets.BASIC_AUTH_PASSWORD}} }"
+
           fi
 
       - name: Verify deployment
