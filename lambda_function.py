@@ -17,6 +17,25 @@ table = dynamodb.Table('quiz')
 
 def lambda_handler(event, context):
     try:
+         # Log the incoming event
+        logger.info(f"Received event quiz create: {event}")
+        # Standard CORS headers
+        cors_headers = {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'authorization, content-type',
+        'Access-Control-Allow-Credentials': 'true'
+        }
+    
+        # Handle OPTIONS preflight
+        if event.get('requestContext', {}).get('http', {}).get('method') == 'OPTIONS':
+          return {
+            'statusCode': 200,
+            'headers': cors_headers,
+            'body': ''
+        }
+    
+
         # Get credentials from environment variables
         expected_username = os.environ.get('BASIC_AUTH_USERNAME')
         expected_password = os.environ.get('BASIC_AUTH_PASSWORD')
